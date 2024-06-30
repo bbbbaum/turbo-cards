@@ -55,6 +55,7 @@
 			card.style.left = `${originalX}px`;
 			card.style.backgroundColor = originalColor;
 			document.documentElement.style.overscrollBehavior = "initial"
+			document.body.style.overscrollBehavior = "initial"
 			document.body.removeEventListener("mousemove", moveCard);
 			document.body.removeEventListener("touchmove", moveCard);
 		}
@@ -71,6 +72,7 @@
 			document.body.addEventListener("mousemove", moveCard);
 			document.body.addEventListener("touchmove", moveCard);
 			document.documentElement.style.overscrollBehavior = "none"
+			document.body.style.overscrollBehavior = "none"
 		}
 
 		card.addEventListener("mousedown", startMoving);
