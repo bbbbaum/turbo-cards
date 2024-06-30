@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body, html {
+			height: 100%;
+		}
+		.container {
+			width: 100%;
+			height: 100%;
+		}
+		.card {
+			width: 350px;
+			height: 550px;
+			background-color: coral;
+			position: fixed;
+			top: calc(50% - 275px);
+			left: calc(50% - 175px);
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div id="card" class="card"></div>
+	</div>
+	<script>
+		let press = false;
+		let offsetX, offesetY;
+		let center = document.body.getBoundingClientRect().width / 2 - 175;
+		const card = document.getElementById("card");
+		let originalX = card.getBoundingClientRect().left;
+		let originalColor = 'coral';
+
+		moveCard = function (event) {
+			let x = 0;
+			if (event.touches && event.touches.length > 0) {
+				x = event.touches[0].pageX;
+			} else {
+				x = event.clientX;
+			}
+			if (press && Math.abs(center - x + offsetX) < 175) {
+				card.style.left = `${x - offsetX}px`;
+			} else if (press && (center - x + offsetX) > 175) {
+				card.style.backgroundColor = 'green';
+			} else if (press && (center - x + offsetX) < -175) {
+				card.style.backgroundColor = 'red';
+			}
+		}
+
+		resetCard = function () {
+			press = false;
+			card.style.left = `${originalX}px`;
+			card.style.backgroundColor = originalColor;
+			document.body.removeEventListener("mousemove", moveCard);
+			document.body.removeEventListener("touchmove", moveCard);
+		}
+
+		startMoving = function (event) {
+			press = true;
+			let x = 0;
+			if (event.touches && event.touches.length > 0) {
+				x = event.touches[0].pageX;
+			} else {
+				x = event.clientX;
+			}
+			offsetX = x - card.getBoundingClientRect().left;
+			document.body.addEventListener("mousemove", moveCard);
+			document.body.addEventListener("touchmove", moveCard);
+		}
+
+		card.addEventListener("mousedown", startMoving);
+		card.addEventListener("touchstart", startMoving);
+		document.body.addEventListener("mouseup", resetCard);
+		document.body.addEventListener("touchend", resetCard);
+		document.body.addEventListener("mouseleave", resetCard);
+		document.body.addEventListener("touchcancel", resetCard);
+	</script>
+</body>
+</html>
