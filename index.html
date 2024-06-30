@@ -54,6 +54,7 @@
 			press = false;
 			card.style.left = `${originalX}px`;
 			card.style.backgroundColor = originalColor;
+			document.documentElement.style.overscrollBehavior = "initial"
 			document.body.removeEventListener("mousemove", moveCard);
 			document.body.removeEventListener("touchmove", moveCard);
 		}
@@ -69,6 +70,7 @@
 			offsetX = x - card.getBoundingClientRect().left;
 			document.body.addEventListener("mousemove", moveCard);
 			document.body.addEventListener("touchmove", moveCard);
+			document.documentElement.style.overscrollBehavior = "none"
 		}
 
 		card.addEventListener("mousedown", startMoving);
